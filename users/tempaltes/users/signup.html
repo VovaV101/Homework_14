@@ -1,0 +1,66 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<style>
+    .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: auto;
+    }
+
+    label {
+        width: 100%;
+    }
+</style>
+<div class="form-signin rounded-3 bg-light">
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div role="alert" class="text-center alert alert-primary {% if message.tags %} alert-{{ message.tags }} {% endif %}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% for error in form.non_field_errors %}
+    <div>
+        <div role="alert" class="text-center alert alert-warning">{{ error }}</div>
+    </div>
+    {% endfor %}
+    <h1 class="h3 mb-3 fw-normal text-center">Please SignUp</h1>
+    <form method="post" action="{% url 'users:signup' %}">
+        {% csrf_token %}
+        <div class="mb-3 mt-3">
+            <label for="username" class="form-label">Username:
+                {{ form.username }}
+            </label>
+            <span>{{ form.errors.username }}</span>
+        </div>
+        <div class="mb-3 mt-3">
+            <label for="email" class="form-label">Email:
+                {{ form.email }}
+            </label>
+            <span>{{ form.errors.username }}</span>
+        </div>
+        <div class="mb-3">
+            <label for="id_password1" class="form-label">Password:
+                {{ form.password1 }}
+            </label>
+            <span>{{ form.errors.password1 }}</span>
+        </div>
+        <div class="mb-3">
+            <label for="id_password2" class="form-label"> Password confirmation:
+                {{ form.password2 }}
+            </label>
+            <span>{{ form.errors.password2 }}</span>
+        </div>
+
+        <div class="mb-3 text-center">
+            <button class="btn btn-primary" type="submit">SignUp</button>
+            <button class="btn btn-secondary" type="reset ">Reset</button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
+

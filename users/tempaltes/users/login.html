@@ -1,0 +1,59 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<style>
+    .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: auto;
+    }
+
+    label {
+        width: 100%;
+    }
+</style>
+<div class="form-signin rounded-3 bg-light">
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div role="alert" class="text-center alert alert-primary {% if message.tags %} alert-{{ message.tags }} {% endif %}">{{ message }}</div>
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div role="alert" class="text-center alert alert-warning">{{ error }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% for error in form.non_field_errors %}
+    <div>
+        <div role="alert" class="text-center alert alert-warning">{{ error }}</div>
+    </div>
+    {% endfor %}
+    <h1 class="h3 mb-3 fw-normal text-center">Please login</h1>
+    <form action="{% url 'users:login' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3 mt-3">
+            <label for="username" class="form-label">Username:
+                {{ form.username }}
+            </label>
+            <span>{{ form.errors.username }}</span>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:
+                {{ form.password }}
+            </label>
+            <span>{{ form.errors.password }}</span>
+        </div>
+
+        <div class="mb-3 text-center">
+            <button class="btn btn-primary" type="submit">Login</button>
+            <button class="btn btn-secondary" type="reset ">Reset</button>
+        </div>
+        <div class="small text-center">
+            <a href="{% url 'users:password_reset' %}" class="text-center"><i>Forgot Password?</i></a>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}

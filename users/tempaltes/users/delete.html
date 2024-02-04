@@ -1,0 +1,42 @@
+{% extends "quotes/base.html" %} {% block content %} {% if messages %}
+<div>
+  {% for message in messages %}
+  <div {% if message.tags %} class="alert-{{ message.tags }}" {% endif %}>
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<style>
+  .form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+  }
+
+  label {
+    width: 100%;
+  }
+
+  input {
+    width: 100%;
+  }
+</style>
+
+<div class="form-signin rounded-3 bg-light">
+  <form action="{% url 'users:delete' %}" method="post" >
+    {% csrf_token %}
+    <div class="alert alert-warning p-3 mb-3">
+      Will be deleted this user: "{{ username }}".
+    </div>
+    <input type="hidden" name="username" value="{{ username }}" />
+    <div class="grid text-center mt-4">
+      <button type="submit" class="btn btn-primary">Confirm to DELETE</button>
+      <button type="reset" class="btn btn-secondary">Reset</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}
